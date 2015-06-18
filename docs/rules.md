@@ -17,5 +17,5 @@ Oversikt over kombinasjon skole/postnummer som kan resulterer i NSB som transpor
 
 # Postnummer
 - Alle postnummer i Skien, Porsgrunn, Bamble og Siljan til Notodden videregående skole
-- Alle postnummer i Tinn, Hjartdal og Notodden + 3820 Nordagutu til ALLE vgs i Skien og Prosgrunn
+- Alle postnummer i Tinn, Hjartdal og Notodden + 3820 Nordagutu til ALLE vgs i Skien og Porsgrunn
 - Alle postnummer i Drangedal til Bø og Nome Vgs
