@@ -1,6 +1,6 @@
 {
   "name": "tfk-saksbehandling-skoleskyss-nsb",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Checks if NSB is transporter",
   "license": "MIT",
   "author": {
@@ -8,9 +8,16 @@
     "email": "geir.gasodden@pythonia.no",
     "url": "https://github.com/zrrrzzt"
   },
+  "contributors": [
+    {
+      "name": "Jørgen Johansen",
+      "email": "post@jorgenjohansen.no",
+      "url": "https://jorgenjohansen.no"
+    }
+  ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.4.5"
   },
   "scripts": {
     "test": "standard && tap --reporter=spec test/*.js",
