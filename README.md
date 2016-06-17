@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/telemark/tfk-saksbehandling-skoleskyss-nsb.svg?branch=master)](https://travis-ci.org/telemark/tfk-saksbehandling-skoleskyss-nsb)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 # tfk-saksbehandling-skoleskyss-nsb
 Node-module for identifying NSB as transporter.
 
