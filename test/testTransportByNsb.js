@@ -1,115 +1,90 @@
-'use strict';
+'use strict'
 
-var assert = require('assert');
-var transportByNsb = require('../index');
+const tap = require('tap')
+const transportByNsb = require('../index')
 
-describe('transportByNsb', function() {
+tap.throws(
+  function () {
+    const options = false
+    transportByNsb(options)
+  },
+  {message: 'Missing required input: options object'},
+  'requires an options object'
+)
 
-  it('requires an options object', function(done) {
-
-    var options = false;
-    var result = transportByNsb(options);
-    var condition = false;
-    if ((result instanceof Error) && /Missing required input: options object/.test(result)) {
-      condition = true;
-    }
-    assert.equal(true, condition);
-    done();
-  });
-
-  it('requires options.postnummer to exist', function(done) {
-
-    var options = {
+tap.throws(
+  function () {
+    const options = {
       postnummer: false
-    };
-    var result = transportByNsb(options);
-    var condition = false;
-    if ((result instanceof Error) && /Missing required input: options.postnummer/.test(result)) {
-      condition = true;
     }
-    assert.equal(true, condition);
-    done();
-  });
+    transportByNsb(options)
+  },
+  {message: 'Missing required input: options.postnummer'},
+  'requires options.postnummer to exist'
+)
 
-  it('requires options.skoleid to exist', function(done) {
-
-    var options = {
+tap.throws(
+  function () {
+    const options = {
       postnummer: true,
       skoleid: false
-    };
-    var result = transportByNsb(options);
-    var condition = false;
-    if ((result instanceof Error) && /Missing required input: options.skoleid/.test(result)) {
-      condition = true;
     }
-    assert.equal(true, condition);
-    done();
-  });
+    transportByNsb(options)
+  },
+  {message: 'Missing required input: options.skoleid'},
+  'requires options.skoleid to exist'
+)
+//
+tap.test('returns true if postnummer Notodden og skole Skogmo', function (test) {
+  const options = {
+    postnummer: 3681,
+    skoleid: 3735
+  }
+  tap.equal(transportByNsb(options), true, 'Test OK')
+  test.done()
+})
 
-  it('returns true if postnummer Notodden og skole Skogmo', function(done) {
+tap.test('returns false if postnummer Notodden og skole Bø', function (test) {
+  const options = {
+    postnummer: 3681,
+    skoleid: 3802
+  }
+  tap.equal(transportByNsb(options), false, 'Test OK')
+  test.done()
+})
 
-    var options = {
-      postnummer: 3681,
-      skoleid: 3735
-    };
-    var result = transportByNsb(options);
-    assert.equal(true, result);
-    done();
-  });
+tap.test('returns true if postnummer Skien og skole Notodden', function (test) {
+  const options = {
+    postnummer: 3703,
+    skoleid: 3674
+  }
+  tap.equal(transportByNsb(options), true, 'Test OK')
+  test.done()
+})
 
-  it('returns false if postnummer Notodden og skole Bø', function(done) {
+tap.test('returns false if postnummer Skien og skole Bø', function (test) {
+  const options = {
+    postnummer: 3703,
+    skoleid: 3802
+  }
+  tap.equal(transportByNsb(options), false, 'Test OK')
+  test.done()
+})
 
-    var options = {
-      postnummer: 3681,
-      skoleid: 3802
-    };
-    var result = transportByNsb(options);
-    assert.equal(false, result);
-    done();
-  });
+tap.test('returns true if postnummer Drangedal og skole Bø', function (test) {
+  const options = {
+    postnummer: 3753,
+    skoleid: 3802
+  }
+  tap.equal(transportByNsb(options), true, 'Test OK')
+  test.done()
+})
 
-  it('returns true if postnummer Skien og skole Notodden', function(done) {
-
-    var options = {
-      postnummer: 3703,
-      skoleid: 3674
-    };
-    var result = transportByNsb(options);
-    assert.equal(true, result);
-    done();
-  });
-
-  it('returns false if postnummer Skien og skole Bø', function(done) {
-
-    var options = {
-      postnummer: 3703,
-      skoleid: 3802
-    };
-    var result = transportByNsb(options);
-    assert.equal(false, result);
-    done();
-  });
-
-  it('returns true if postnummer Drangedal og skole Bø', function(done) {
-
-    var options = {
-      postnummer: 3753,
-      skoleid: 3802
-    };
-    var result = transportByNsb(options);
-    assert.equal(true, result);
-    done();
-  });
-
-  it('returns false if postnummer Drangedal og skole Skogmo', function(done) {
-
-    var options = {
-      postnummer: 3753,
-      skoleid: 3735
-    };
-    var result = transportByNsb(options);
-    assert.equal(false, result);
-    done();
-  });
-
-});
+tap.test('returns false if postnummer Drangedal og skole Skogmo', function (test) {
+  const options = {
+    postnummer: 3753,
+    skoleid: 3735
+  }
+  tap.equal(transportByNsb(options), false, 'Test OK')
+  test.done()
+})

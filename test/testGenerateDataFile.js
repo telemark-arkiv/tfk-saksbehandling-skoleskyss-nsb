@@ -1,205 +1,108 @@
-'use strict';
+'use strict'
 
-var assert = require('assert');
-var generateDataFile = require('../lib/generateDataFile');
+const tap = require('tap')
+const generateDataFile = require('../lib/generateDataFile')
 
-describe('generateDataFile', function() {
+tap.test('requires an options object', function (test) {
+  const options = false
+  const expectedErrorMessage = 'Missing required input: options object'
 
-  it('requires an options object', function(done) {
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = false;
+tap.test('requires options.apiUrl to exist', function (test) {
+  const options = {
+    apiUrl: false
+  }
+  const expectedErrorMessage = 'Missing required input: options.apiUrl'
 
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options object/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-  });
+tap.test('requires options.apiUrl to be a valid URL', function (test) {
+  const options = {
+    apiUrl: 'pysjepreik'
+  }
+  const expectedErrorMessage = 'Invalid URL: options.apiUrl'
 
-  it('requires options.apiUrl to exist', function(done) {
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = {
-      apiUrl: false
-    };
+tap.test('requires options.queryList to exist', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    queryList: false
+  }
+  const expectedErrorMessage = 'Missing required input: options.queryList'
 
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options.apiUrl/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-  });
+tap.test('requires options.queryList to be an array', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    queryList: 'Notodden'
+  }
+  const expectedErrorMessage = 'Malformed input: options.queryList must be an array'
 
-  it('requires options.apiUrl to be a valid URL', function(done) {
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = {
-      apiUrl: 'pysjepreik'
-    };
+tap.test('requires options.extras to be an array', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    queryList: ['Notodden'],
+    extras: 'liste'
+  }
+  const expectedErrorMessage = 'Malformed input: options.extras must be an array'
 
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Invalid URL: options.apiUrl/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-  });
+tap.test('requires options.fileName to exist', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    queryList: ['notodden'],
+    fileName: false
+  }
+  const expectedErrorMessage = 'Missing required input: options.fileName'
 
-  it('requires options.queryList to exist', function(done) {
+  generateDataFile(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      queryList: false
-    };
+tap.test('writes a file on success', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    queryList: ['notodden'],
+    fileName: 'testnotodden.json'
+  }
 
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options.queryList/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('requires options.queryList to be an array', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      queryList: 'Notodden'
-    };
-
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Malformed input: options.queryList must be an array/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('requires options.extras to be an array', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      queryList: ['Notodden'],
-      extras: 'liste'
-    };
-
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Malformed input: options.extras must be an array/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('requires options.fileName to exist', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      queryList: ['notodden'],
-      fileName: false
-    };
-
-    generateDataFile(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options.fileName/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('writes a file on success', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      queryList: ['notodden'],
-      fileName: 'testnotodden.json'
-    };
-
-    generateDataFile(options, function(err, data) {
-      if (err) {
-        throw err;
-      } else {
-        assert.equal(data, 'File testnotodden.json written');
-      }
-      done();
-    });
-
-  });
-});
+  generateDataFile(options, function (error, data) {
+    if (error) {
+      throw error
+    }
+    tap.equal(data, 'File testnotodden.json written', 'Data OK')
+    test.done()
+  })
+})

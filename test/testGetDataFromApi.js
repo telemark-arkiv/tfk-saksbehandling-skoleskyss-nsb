@@ -1,142 +1,81 @@
-'use strict';
+'use strict'
 
-var assert = require('assert');
-var getDataFromApi = require('../lib/getDataFromApi');
+const tap = require('tap')
+const getDataFromApi = require('../lib/getDataFromApi')
 
-describe('getDataFromApi', function() {
+tap.test('requires an options object', function (test) {
+  const options = false
+  const expectedErrorMessage = 'Missing required input: options object'
 
-  it('requires an options object', function(done) {
+  getDataFromApi(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = false;
+tap.test('requires options.apiUrl to exist', function (test) {
+  const options = {
+    apiUrl: false
+  }
+  const expectedErrorMessage = 'Missing required input: options.apiUrl'
 
-    getDataFromApi(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options object/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
+  getDataFromApi(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-  });
+tap.test('requires options.apiUrl to be a valid URL', function (test) {
+  const options = {
+    apiUrl: 'pysjepreik'
+  }
+  const expectedErrorMessage = 'Invalid URL: options.apiUrl'
 
-  it('requires options.apiUrl to exist', function(done) {
+  getDataFromApi(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-    var options = {
-      apiUrl: false
-    };
+tap.test('requires options.query to exist', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    query: false
+  }
+  const expectedErrorMessage = 'Missing required input: options.query'
 
-    getDataFromApi(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options.apiUrl/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
+  getDataFromApi(options, function (error, data) {
+    tap.equal(error.message, expectedErrorMessage, expectedErrorMessage)
+    test.done()
+  })
+})
 
-  });
+tap.test('returns a list on success', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    query: 'notodden'
+  }
 
-  it('requires options.apiUrl to be a valid URL', function(done) {
+  getDataFromApi(options, function (error, data) {
+    if (error) {
+      throw error
+    }
+    tap.equal(data.length, 14, 'Data OK')
+    test.done()
+  })
+})
 
-    var options = {
-      apiUrl: 'pysjepreik'
-    };
+tap.test('returns an empty list on fail', function (test) {
+  const options = {
+    apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
+    query: 'spøkepølse'
+  }
 
-    getDataFromApi(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Invalid URL: options.apiUrl/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('requires options.query to exist', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      query: false
-    };
-
-    getDataFromApi(options, function(err, data) {
-      assert.throws(function() {
-          if (err) {
-            throw err;
-          } else {
-            console.log(data);
-          }
-        }, function(err) {
-          if ((err instanceof Error) && /Missing required input: options.query/.test(err)) {
-            return true;
-          }
-        },
-        'Unexpected error'
-      );
-      done();
-    });
-
-  });
-
-  it('returns a list on success', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      query: 'notodden'
-    };
-
-    getDataFromApi(options, function(err, data) {
-      if (err) {
-        throw err;
-      } else {
-        assert.equal(data.length, 14);
-      }
-      done();
-    });
-
-  });
-
-  it('returns an empty list on fail', function(done) {
-
-    var options = {
-      apiUrl: 'https://api.t-fk.no/postnummer/kommunenavn',
-      query: 'spøkepølse'
-    };
-
-    getDataFromApi(options, function(err, data) {
-      if (err) {
-        throw err;
-      } else {
-        assert.equal(data.length, 0);
-      }
-      done();
-    });
-
-  });
-});
+  getDataFromApi(options, function (error, data) {
+    if (error) {
+      throw error
+    }
+    tap.equal(data.length, 0, 'Data OK')
+    test.done()
+  })
+})
