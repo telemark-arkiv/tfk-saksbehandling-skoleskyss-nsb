@@ -2,13 +2,13 @@
 
 module.exports = function transportByNsb (options) {
   if (!options) {
-    return new Error('Missing required input: options object')
+    throw new Error('Missing required input: options object')
   }
   if (!options.postnummer) {
-    return new Error('Missing required input: options.postnummer')
+    throw new Error('Missing required input: options.postnummer')
   }
   if (!options.skoleid) {
-    return new Error('Missing required input: options.skoleid')
+    throw new Error('Missing required input: options.skoleid')
   }
 
   const skoleBoNome = require('./lib/data/skoleids_bo_nome.json')
