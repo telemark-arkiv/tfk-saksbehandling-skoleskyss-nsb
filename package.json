@@ -3,7 +3,6 @@
   "version": "1.0.1",
   "description": "Checks if NSB is transporter",
   "license": "MIT",
-  "private": true,
   "author": {
     "name": "Geir Gåsodden",
     "email": "geir.gasodden@pythonia.no",
@@ -32,8 +31,9 @@
     "url": "http://github.com/telemark/tfk-saksbehandling-skoleskyss-nsb/issues"
   },
   "devDependencies": {
-    "jscs": "^1.13.1",
-    "mocha": "^2.2.5",
+    "coveralls": "2.11.9",
+    "standard": "7.1.2",
+    "tap": "5.7.2",
     "valid-url": "^1.0.9"
   }
 }
