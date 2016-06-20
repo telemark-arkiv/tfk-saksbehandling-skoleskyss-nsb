@@ -18,7 +18,7 @@ cd into the directory and run the setup script
 $ npm run setup
 ```
 
-This will install the module dependencies and generate the zipcode files
+This will install the module dependencies
 
 ## Usage
 Pass in an options object and get true or false in return.
@@ -43,7 +43,7 @@ console.log(transportByNSB(options)); //Returns true
 
 The logic is explained in the [docs/rules.md](/docs/rules.md)
 
-The complete list of schoolids is in [lib/data/skoleliste_full.json](/lib/data/skoleliste_full.json)
+The complete list of schoolids is in [lib/data/skoler.json](/lib/data/skoler.json)
 
 ## Test
 

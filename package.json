@@ -1,6 +1,6 @@
 {
   "name": "tfk-saksbehandling-skoleskyss-nsb",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Checks if NSB is transporter",
   "license": "MIT",
   "author": {
@@ -42,7 +42,9 @@
   "devDependencies": {
     "coveralls": "2.11.9",
     "standard": "7.1.2",
-    "tap": "5.7.2",
-    "valid-url": "^1.0.9"
+    "tap": "5.7.2"
+  },
+  "dependencies": {
+    "is-file": "1.0.0"
   }
 }
