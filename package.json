@@ -40,9 +40,9 @@
     "url": "http://github.com/telemark/tfk-saksbehandling-skoleskyss-nsb/issues"
   },
   "devDependencies": {
-    "coveralls": "2.11.9",
-    "standard": "7.1.2",
-    "tap": "5.7.2"
+    "coveralls": "2.11.12",
+    "standard": "8.0.0",
+    "tap": "7.0.0"
   },
   "dependencies": {
     "is-file": "1.0.0"
