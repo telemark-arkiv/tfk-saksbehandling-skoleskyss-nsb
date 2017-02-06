@@ -2,6 +2,8 @@
 [![Coverage Status](https://coveralls.io/repos/telemark/tfk-saksbehandling-skoleskyss-nsb/badge.svg?branch=master&service=github)](https://coveralls.io/github/telemark/tfk-saksbehandling-skoleskyss-nsb?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 # tfk-saksbehandling-skoleskyss-nsb
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/telemark/tfk-saksbehandling-skoleskyss-nsb.svg)](https://greenkeeper.io/)
 Node-module for identifying NSB as transporter.
 
 It uses a combination of zipcodes and schoolids.
